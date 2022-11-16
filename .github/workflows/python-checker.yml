@@ -7,7 +7,7 @@ on:
       - main
       - dev
         paths:
-          - 'python/**'
+          - 'Python/**'
           - '*.py'
 
 jobs:
