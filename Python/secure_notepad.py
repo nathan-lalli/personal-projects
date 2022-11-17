@@ -66,7 +66,7 @@ def open_file():
     my_text.delete("1.0", END)
 
     # Grab Filename
-    text_file = filedialog.askopenfilename(initialdir="C:/gui/", title="Open File", filetypes=(
+    text_file = filedialog.askopenfilename(initialdir="~/Downloads", title="Open File", filetypes=(
         ("Text Files", "*.txt"), ("HTML Files", "*.html"), ("Python Files", "*.py"), ("All Files", "*.*")))
 
     # Check to see if there is a file name
@@ -75,21 +75,34 @@ def open_file():
         global open_status_name
         open_status_name = text_file
 
-    # Open the file
-    text_file = open(text_file, 'r')
-    stuff = text_file.read()
-    # Add file to textbox
-    my_text.insert(END, stuff)
-    # Close the opened file
-    text_file.close()
+    if (check_tag()):
+        key = tk.simpledialog.askstring(
+            "Password", "File is Encrpyted\nPlease enter the password: ")
+        hashedkey = hashlib.sha256(key.encode()).digest()
+        decrypt_file(text_file, hashedkey)
+        # Open the file
+        text_file = open(text_file, 'r')
+        stuff = text_file.read()
+        # Add file to textbox
+        my_text.insert(END, stuff)
+        # Close the opened file
+        text_file.close()
+    else:
+        # Open the file
+        text_file = open(text_file, 'r')
+        stuff = text_file.read()
+        # Add file to textbox
+        my_text.insert(END, stuff)
+        # Close the opened file
+        text_file.close()
 
 
 def save_as_file():
     key = tk.simpledialog.askstring(
         "Password", "Create a Password: \n (If you do not want to encrypt, leave blank")
-    text_file = filedialog.asksaveasfilename(defaultextension=".txt", initialdir="~", title="Save File", filetypes=(
+    text_file = filedialog.asksaveasfilename(defaultextension=".txt", initialdir="~/Downloads", title="Save File", filetypes=(
         ("Text Files", "*.txt"), ("All Files", "*.*")))
-    if key == "":
+    if key == '':
         if text_file:
             # Save the file
             text_file = open(text_file, 'w')
@@ -100,7 +113,8 @@ def save_as_file():
             text_file = open(text_file, 'wb')
             hashedkey = hashlib.sha256(key.encode()).digest()
             enc = encrypt_file(text_file.name, hashedkey)
-            my_text.tag_add("encrypted", 1.0, END)
+            my_text.tag_add('encrypted', 1.0, END)
+            current_tags = my_text.tag_names()
             text_file.write(enc)
 
 
@@ -114,7 +128,7 @@ def save_file():
             text_file = open(text_file, 'wb')
             hashedkey = hashlib.sha256(key.encode()).digest()
             enc = encrypt_file(text_file.name, hashedkey)
-            my_text.tag_add("encrypted", 1.0, END)
+            my_text.tag_add('encrypted', 1.0, END)
             text_file.write(enc)
         else:
             save_as_file()
@@ -175,7 +189,7 @@ def check_tag():
     # Define Current tags
     current_tags = my_text.tag_names()
     # If statment to see if tag has been set
-    if "encrypted" in current_tags:
+    if 'encrypted' in current_tags:
         return True
         #my_text.tag_remove("colored", "sel.first", "sel.last")
     else:
