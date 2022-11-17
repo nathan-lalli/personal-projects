@@ -6,6 +6,8 @@ from tkinter import font
 from tkinter import colorchooser
 from Crypto import Random
 from Crypto.Cipher import AES
+from pytaggit import tag_manager as tagger
+
 import os
 import sys
 import hashlib
@@ -67,7 +69,7 @@ def open_file():
 
     # Grab Filename
     text_file = filedialog.askopenfilename(initialdir="~/Downloads", title="Open File", filetypes=(
-        ("Text Files", "*.txt"), ("HTML Files", "*.html"), ("Python Files", "*.py"), ("All Files", "*.*")))
+        ("Text Files", "*.txt"), ("Encrypted Files", "*.enc"), ("Python Files", "*.py"), ("All Files", "*.*")))
 
     # Check to see if there is a file name
     if text_file:
@@ -75,10 +77,11 @@ def open_file():
         global open_status_name
         open_status_name = text_file
 
-    if (check_tag()):
+    if (check_tag(text_file)):
         key = tk.simpledialog.askstring(
             "Password", "File is Encrpyted\nPlease enter the password: ")
         hashedkey = hashlib.sha256(key.encode()).digest()
+        print(hashedkey)
         decrypt_file(text_file, hashedkey)
         # Open the file
         text_file = open(text_file, 'r')
@@ -97,6 +100,13 @@ def open_file():
         text_file.close()
 
 
+# def encrypt_file(file_name, key):
+ #   with open(file_name, 'rb') as fo:
+  #      plaintext = fo.read()
+   # enc = encrypt(plaintext, key)
+    # with open(file_name + ".enc", 'wb') as fo:
+     #   fo.write(enc)
+
 def save_as_file():
     key = tk.simpledialog.askstring(
         "Password", "Create a Password: \n (If you do not want to encrypt, leave blank")
@@ -112,15 +122,15 @@ def save_as_file():
             # Save the file
             text_file = open(text_file, 'wb')
             hashedkey = hashlib.sha256(key.encode()).digest()
+            print(hashedkey)
             enc = encrypt_file(text_file.name, hashedkey)
-            my_text.tag_add('encrypted', 1.0, END)
-            current_tags = my_text.tag_names()
-            text_file.write(enc)
+            with open(text_file.name + ".enc", 'wb') as tag:
+                tag.write(enc)
 
 
 def save_file():
     global open_status_name
-    if check_tag():
+    if check_tag(open_status_name):
         if open_status_name:
             key = tk.simpledialog.askstring(
                 "Password", "Create a Password: \n (If you do not want to encrypt, leave blank")
@@ -128,8 +138,8 @@ def save_file():
             text_file = open(text_file, 'wb')
             hashedkey = hashlib.sha256(key.encode()).digest()
             enc = encrypt_file(text_file.name, hashedkey)
-            my_text.tag_add('encrypted', 1.0, END)
-            text_file.write(enc)
+            with open(text_file + ".enc", 'wb') as tag:
+                tag.write(enc)
         else:
             save_as_file()
     else:
@@ -185,16 +195,14 @@ def paste_text(e):
 
 
 # Check the tag of the file
-def check_tag():
+def check_tag(file):
     # Define Current tags
-    current_tags = my_text.tag_names()
+    tag = str(file)[-4:]
     # If statment to see if tag has been set
-    if 'encrypted' in current_tags:
+    if '.enc' == tag:
         return True
-        #my_text.tag_remove("colored", "sel.first", "sel.last")
     else:
         return False
-        #my_text.tag_add("colored", "sel.first", "sel.last")
 
 
 def select_all(e):
