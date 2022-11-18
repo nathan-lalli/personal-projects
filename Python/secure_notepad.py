@@ -1,16 +1,23 @@
-import tkinter as tk
-import tkinter.simpledialog
-from tkinter import *
-from tkinter import filedialog
-from tkinter import font
-from tkinter import colorchooser
-from Crypto import Random
-from Crypto.Cipher import AES
-from pytaggit import tag_manager as tagger
+# By default the program will save the file in the root directory
+# this will encrypt a file without saving the password
+# and then let you decrypt it when you enter the password
+#
+# To run this you will need to run the following
+# pip install tk
+# pip install pycryptodome
+
 
 import os
 import sys
 import hashlib
+import tkinter as tk
+from tkinter import *
+from tkinter import filedialog
+from tkinter import simpledialog
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+from Crypto.Util.Padding import pad, unpad
+from base64 import b64encode, b64decode
 
 root = tk.Tk()
 root.title('Secure Notepad')
@@ -23,36 +30,23 @@ global selected
 selected = False
 
 
-def pad(s):
-    return s + b"\0" * (AES.block_size - len(s) % AES.block_size)
-
-
-def encrypt(message, key, key_size=256):
-    message = pad(message)
-    iv = Random.new().read(AES.block_size)
+def encrypt(message, key):
+    iv = get_random_bytes(AES.block_size)
     cipher = AES.new(key, AES.MODE_CBC, iv)
-    return iv + cipher.encrypt(message)
+    return b64encode(iv + cipher.encrypt(pad(message.encode('utf-8'), AES.block_size)))
 
 
 def decrypt(ciphertext, key):
-    iv = ciphertext[:AES.block_size]
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    plaintext = cipher.decrypt(ciphertext[AES.block_size:])
-    return plaintext.rstrip(b"\0")
-
-
-def encrypt_file(file_name, key):
-    with open(file_name, 'rb') as fo:
-        plaintext = fo.read()
-    return encrypt(plaintext, key)
+    iv = b64decode(ciphertext)
+    cipher = AES.new(key, AES.MODE_CBC, iv[:AES.block_size])
+    return unpad(cipher.decrypt(
+        iv[AES.block_size:]), AES.block_size)
 
 
 def decrypt_file(file_name, key):
-    with open(file_name, 'rb') as fo:
+    with open(file_name, 'r') as fo:
         ciphertext = fo.read()
-    dec = decrypt(ciphertext, key)
-    with open(file_name[:-4], 'wb') as fo:
-        fo.write(dec)
+    return decrypt(ciphertext, key)
 
 
 def new_file():
@@ -68,7 +62,7 @@ def open_file():
     my_text.delete("1.0", END)
 
     # Grab Filename
-    text_file = filedialog.askopenfilename(initialdir="~/Downloads", title="Open File", filetypes=(
+    text_file = filedialog.askopenfilename(initialdir="C:\", title="Open File", filetypes=(
         ("Text Files", "*.txt"), ("Encrypted Files", "*.enc"), ("Python Files", "*.py"), ("All Files", "*.*")))
 
     # Check to see if there is a file name
@@ -80,11 +74,12 @@ def open_file():
     if (check_tag(text_file)):
         key = tk.simpledialog.askstring(
             "Password", "File is Encrpyted\nPlease enter the password: ")
-        hashedkey = hashlib.sha256(key.encode()).digest()
-        print(hashedkey)
-        decrypt_file(text_file, hashedkey)
+        hashedkey = hashlib.sha256(key.encode('utf-8')).digest()
+        dec = decrypt_file(text_file, hashedkey).decode('utf-8')
+        with open(text_file[:-4], 'w') as fo:
+            fo.write(dec)
         # Open the file
-        text_file = open(text_file, 'r')
+        text_file = open(text_file[:-4], 'r')
         stuff = text_file.read()
         # Add file to textbox
         my_text.insert(END, stuff)
@@ -100,17 +95,10 @@ def open_file():
         text_file.close()
 
 
-# def encrypt_file(file_name, key):
- #   with open(file_name, 'rb') as fo:
-  #      plaintext = fo.read()
-   # enc = encrypt(plaintext, key)
-    # with open(file_name + ".enc", 'wb') as fo:
-     #   fo.write(enc)
-
 def save_as_file():
     key = tk.simpledialog.askstring(
         "Password", "Create a Password: \n (If you do not want to encrypt, leave blank")
-    text_file = filedialog.asksaveasfilename(defaultextension=".txt", initialdir="~/Downloads", title="Save File", filetypes=(
+    text_file = filedialog.asksaveasfilename(defaultextension=".txt", initialdir="C:\", title="Save File", filetypes=(
         ("Text Files", "*.txt"), ("All Files", "*.*")))
     if key == '':
         if text_file:
@@ -120,12 +108,10 @@ def save_as_file():
     else:
         if text_file:
             # Save the file
-            text_file = open(text_file, 'wb')
-            hashedkey = hashlib.sha256(key.encode()).digest()
-            print(hashedkey)
-            enc = encrypt_file(text_file.name, hashedkey)
-            with open(text_file.name + ".enc", 'wb') as tag:
-                tag.write(enc)
+            text_file = open(text_file + ".enc", 'w')
+            hashedkey = hashlib.sha256(key.encode('utf-8')).digest()
+            enc = encrypt(my_text.get(1.0, END), hashedkey).decode('utf-8')
+            text_file.write(enc)
 
 
 def save_file():
@@ -135,11 +121,10 @@ def save_file():
             key = tk.simpledialog.askstring(
                 "Password", "Create a Password: \n (If you do not want to encrypt, leave blank")
             # Save the file
-            text_file = open(text_file, 'wb')
-            hashedkey = hashlib.sha256(key.encode()).digest()
-            enc = encrypt_file(text_file.name, hashedkey)
-            with open(text_file + ".enc", 'wb') as tag:
-                tag.write(enc)
+            text_file = open(text_file + ".enc", 'w')
+            hashedkey = hashlib.sha256(key.encode('utf-8')).digest()
+            enc = encrypt(my_text.get(1.0, END), hashedkey).decode('utf-8')
+            text_file.write(enc)
         else:
             save_as_file()
     else:
