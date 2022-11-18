@@ -1,16 +1,23 @@
+# ----------------------------------------------------------------------
+# This program will get a ciphertext from the user and then decrypt it
+# and return the plaintext to the user.
+# This is all run in the console.
+#
+# To be able to use this file you will need to run the command
+#
+# pip install pyenchant
+# pip install subbreaker
+# ----------------------------------------------------------------------
+
 import os
 import enchant
 import subbreaker
-
-# Get input from the user
-# This should be the encrypted message
 
 
 secret = True
 dictionary = enchant.Dict("en")
 
-# message = input("Enter the cryptogram here: ")
-message = "ILDS KXJ SDSJCK UJ VLJ ZDLC, KXJ UDLQR KJCRW KD XVTJ V ZDE VQLJVRM ZGHQK IDL GW KD IHK HCWHRJ. DGL GSZHQHNVQ NDLR CJTJL WJJSW KD ZJ WJTJLJR; UJ DCQM IHCR CJU CJJRW KD IHQQ. HI UJ RHWNDCCJNKJR VCR WJTJLJR DGL VKKVNXSJCKW, UDGQR UJ WXVKKJL DGL NDCIHCJSJCKW VCR JEAVCR ZJMDCR DGL WXJQQ? UDGQR KXJ UDLQR QDDY RHIIJLJCK? UDGQR UJ LJNDPCHBJ DGLWJQTJW? VLJ"
+message = input("Enter the cryptogram here: ")
 
 with open(os.getcwd() + "/EN.json") as fh:
     solver = subbreaker.Breaker(fh)
