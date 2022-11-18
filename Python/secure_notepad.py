@@ -1,3 +1,4 @@
+# ----------------------------------------------------------------------
 # By default the program will save the file in the root directory
 # this will encrypt a file without saving the password
 # and then let you decrypt it when you enter the password
@@ -5,6 +6,7 @@
 # To run this you will need to run the following
 # pip install tk
 # pip install pycryptodome
+# ----------------------------------------------------------------------
 
 
 import os
