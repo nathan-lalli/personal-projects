@@ -62,7 +62,7 @@ def open_file():
     my_text.delete("1.0", END)
 
     # Grab Filename
-    text_file = filedialog.askopenfilename(initialdir="C:\", title="Open File", filetypes=(
+    text_file = filedialog.askopenfilename(initialdir="C:\\", title="Open File", filetypes=(
         ("Text Files", "*.txt"), ("Encrypted Files", "*.enc"), ("Python Files", "*.py"), ("All Files", "*.*")))
 
     # Check to see if there is a file name
@@ -98,7 +98,7 @@ def open_file():
 def save_as_file():
     key = tk.simpledialog.askstring(
         "Password", "Create a Password: \n (If you do not want to encrypt, leave blank")
-    text_file = filedialog.asksaveasfilename(defaultextension=".txt", initialdir="C:\", title="Save File", filetypes=(
+    text_file = filedialog.asksaveasfilename(defaultextension=".txt", initialdir="C:\\", title="Save File", filetypes=(
         ("Text Files", "*.txt"), ("All Files", "*.*")))
     if key == '':
         if text_file:
