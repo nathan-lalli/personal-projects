@@ -16,6 +16,8 @@ Cryptogram Solver
 
 Print Nightmare
 
+Desktop and Lock Screen Setter
+
 ## Languages
 
 #### Python
@@ -51,3 +53,13 @@ This batch file runs a script that fixes the print nightmare bug in Windows 10 a
     Instructions:
 
 To run the batch file, right click on the downloaded file and run it as an administrator. The file will run and then prompt that the keys were either successfully added or that they failed. After that the printer should be able to be added.
+
+###### desktop&lockscreen.bat
+
+    Description:
+
+This batch file will take an image that is in the same folder as it is in, it must be called "image.jpg", copy it to the C:\temp folder, then set it as the locksreen and the desktop wallpaper of the machine. It does this by setting the registry key values that control both the lock screena and desktop personalization inside of Windows.
+
+    Instructions:
+    
+To run this batch file, make sure that the image that you are wanting to be made the desktop and lockscreen is in the same location as the batch file and that it is named image and that it is a jpg. It must be named "image.jpg" for this to run properly. After that you can right click the batch file and run it as an admin. This will copy the image over to the temp folder on the computer and then set the registry key values to set the lock screen and desktop wallpaper.
