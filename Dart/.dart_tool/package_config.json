@@ -44,6 +44,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "rpgnamegenerator",
+      "rootUri": "file:///Users/nathan.lalli/.pub-cache/hosted/pub.dartlang.org/rpgnamegenerator-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/nathan.lalli/flutter/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -62,7 +68,7 @@
       "languageVersion": "2.10"
     }
   ],
-  "generated": "2023-01-09T20:09:12.845688Z",
+  "generated": "2023-01-09T23:25:57.177231Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

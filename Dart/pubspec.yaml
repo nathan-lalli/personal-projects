@@ -1,0 +1,7 @@
+name: mobileapps
+environment:
+  sdk: ">=2.10.0 <3.0.0"
+dependencies:
+  list_english_words: ^0.2.0
+  list_of_words: ^0.0.1
+  rpgnamegenerator: ^1.0.2
