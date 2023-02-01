@@ -1,3 +1,8 @@
+// I think this will take at least 2 hours to complete
+// It actually took me about 3 hours or so to complete
+// I had to look up a lot of things in order to find the best way to complete
+// the different things I wanted to do. I also had a lot of issues with the syntax of flutter again
+
 import 'package:flutter/material.dart';
 import 'package:to_do_application/pages/new_task_page.dart';
 
@@ -29,35 +34,38 @@ class _HomePageState extends State<HomePage> {
               body: const CircularProgressIndicator(),
             );
           }
-
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Todo', style: TextStyle(color: Colors.white)),
-              backgroundColor: const Color.fromARGB(255, 141, 140, 140),
-            ),
-            backgroundColor: const Color.fromARGB(136, 19, 18, 18),
-            body: ListView.separated(
-              itemBuilder: (_, index) => _toWidget(index),
-              separatorBuilder: (_, __) => const Divider(),
-              itemCount: _tasks!.length,
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const NewTaskPage()));
-              },
-              backgroundColor: const Color.fromARGB(255, 97, 97, 97),
-              tooltip: 'Add Task',
-              heroTag: "plus",
-              child: const Icon(Icons.add),
-            ),
-          );
+              appBar: AppBar(
+                title:
+                    const Text('Todo', style: TextStyle(color: Colors.white)),
+                backgroundColor: Colors.red,
+              ),
+              backgroundColor: const Color.fromARGB(136, 19, 18, 18),
+              body: ListView.separated(
+                padding: const EdgeInsets.all(5),
+                itemBuilder: (_, index) => _toWidget(index),
+                separatorBuilder: (_, __) => const Divider(),
+                itemCount: _tasks!.length,
+              ),
+              floatingActionButton:
+                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const NewTaskPage()));
+                  },
+                  backgroundColor: Colors.red,
+                  tooltip: 'Add Task',
+                  heroTag: "plus",
+                  child: const Icon(Icons.add),
+                ),
+              ]));
         });
   }
 
   Widget _toWidget(int index) {
     return CheckboxListTile(
-        tileColor: const Color.fromARGB(255, 97, 97, 97),
+        tileColor: const Color.fromARGB(255, 158, 158, 158),
         title: Text(
           _tasks![index].description,
           style: const TextStyle(color: Colors.white),

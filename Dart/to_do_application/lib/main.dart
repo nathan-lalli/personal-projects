@@ -1,5 +1,3 @@
-// I think this will take at least 2 hours to complete
-
 import 'package:flutter/material.dart';
 
 import 'pages/home_page.dart';
