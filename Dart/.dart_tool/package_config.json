@@ -3,13 +3,13 @@
   "packages": [
     {
       "name": "list_english_words",
-      "rootUri": "file:///C:/Users/natha/AppData/Local/Pub/Cache/hosted/pub.dev/list_english_words-0.2.0",
+      "rootUri": "file:///Users/nathan.lalli/.pub-cache/hosted/pub.dev/list_english_words-0.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.16"
     },
     {
       "name": "rpgnamegenerator",
-      "rootUri": "file:///C:/Users/natha/AppData/Local/Pub/Cache/hosted/pub.dev/rpgnamegenerator-1.0.2",
+      "rootUri": "file:///Users/nathan.lalli/.pub-cache/hosted/pub.dev/rpgnamegenerator-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -20,7 +20,7 @@
       "languageVersion": "2.10"
     }
   ],
-  "generated": "2023-02-01T01:26:26.327540Z",
+  "generated": "2023-02-01T20:51:33.719350Z",
   "generator": "pub",
   "generatorVersion": "2.19.0"
 }
