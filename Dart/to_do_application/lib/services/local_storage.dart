@@ -33,28 +33,48 @@ class LocalStorage implements Storage {
   static Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
 CREATE TABLE $_tasksTable (
-  task_id TEXT PRIMARY KEY,
-  description TEXT NOT NULL
+  task_id TEXT PRIMARY KEY AUTOINCREMENT NOT NULL,
+  description TEXT NOT NULL,
+  taskStatus BOOLEAN NOT NULL
 );
 ''');
     return db.execute('''
-INSERT INTO $_tasksTable (task_id, description)
-VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1");
+INSERT INTO $_tasksTable (description, taskStatus)
+VALUES ("task 1", false);
 ''');
   }
 
   @override
   Future<List<Task>> getTasks() async {
     final db = await database;
-    // TODO
-    return [];
+
+    final List<Map<String, dynamic>> result = await db.query(_tasksTable);
+
+    return List.generate(result.length, (i) {
+      return temp(
+        name: result[i]['description'],
+        age: result[i]['taskStatus'],
+      );
+    });
+
+    return result
+        .map((e) => Task(
+              description: e['description'],
+              taskStatus: e['taskStatus'],
+            ))
+        .toList();
   }
 
   @override
-  Future<Task> insertTask(String description, bool taskStatus) async {
+  Future<void> insertTask(String description, bool taskStatus) async {
     final db = await database;
-    // TODO
-    return Task();
+
+    final value = {
+      'description': description,
+      'taskStatus': taskStatus,
+    };
+
+    await db.insert(_tasksTable, value);
   }
 
   ///
@@ -63,6 +83,5 @@ VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1");
   @override
   Future<void> removeTask(Task task) async {
     final db = await database;
-    // TODO
   }
 }
