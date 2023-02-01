@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_application/pages/new_task_page.dart';
 
 import '../controllers/task_controller.dart';
 import '../model/task.dart';
@@ -30,17 +31,46 @@ class _HomePageState extends State<HomePage> {
           }
 
           return Scaffold(
-            appBar: AppBar(title: const Text('Todo')),
+            appBar: AppBar(
+              title: const Text('Todo', style: TextStyle(color: Colors.white)),
+              backgroundColor: const Color.fromARGB(255, 141, 140, 140),
+            ),
+            backgroundColor: const Color.fromARGB(136, 19, 18, 18),
             body: ListView.separated(
               itemBuilder: (_, index) => _toWidget(index),
               separatorBuilder: (_, __) => const Divider(),
               itemCount: _tasks!.length,
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const NewTaskPage()));
+              },
+              backgroundColor: const Color.fromARGB(255, 97, 97, 97),
+              tooltip: 'Add Task',
+              heroTag: "plus",
+              child: const Icon(Icons.add),
             ),
           );
         });
   }
 
   Widget _toWidget(int index) {
-    return const SizedBox();
+    return CheckboxListTile(
+        tileColor: const Color.fromARGB(255, 97, 97, 97),
+        title: Text(
+          _tasks![index].description,
+          style: const TextStyle(color: Colors.white),
+        ),
+        checkColor: Colors.white,
+        activeColor: Colors.white,
+        selected: _tasks![index].isCompleted,
+        value: _tasks![index].isCompleted,
+        onChanged: (bool? value) {
+          setState(() {
+            _tasks![index].isCompleted =
+                _tasks![index].isCompleted ? false : true;
+          });
+        });
   }
 }

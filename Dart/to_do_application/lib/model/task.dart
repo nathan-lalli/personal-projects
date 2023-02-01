@@ -1,7 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 class Task {
-  Task({this.description = '', String? id})
+  Task({this.description = '', String? id, required taskStatus})
       : isCompleted = false,
         id = id ?? _uuid.v1();
   bool isCompleted;
