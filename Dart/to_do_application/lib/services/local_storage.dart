@@ -51,7 +51,7 @@ VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1");
   }
 
   @override
-  Future<Task> insertTask(String description) async {
+  Future<Task> insertTask(String description, bool taskStatus) async {
     final db = await database;
     // TODO
     return Task();
