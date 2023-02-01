@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_application/pages/home_page.dart';
+import '../controllers/task_controller.dart';
 
 class NewTaskPage extends StatelessWidget {
   const NewTaskPage({Key? key}) : super(key: key);
@@ -43,5 +44,9 @@ class NewTaskPage extends StatelessWidget {
               },
               child: const Text('Save'))
         ]));
+  }
+
+  void saveTask() {
+    TaskController();
   }
 }
