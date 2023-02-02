@@ -1,6 +1,5 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../model/task.dart';
 import 'storage.dart';
 
@@ -33,14 +32,14 @@ class LocalStorage implements Storage {
   static Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
 CREATE TABLE $_tasksTable (
-  task_id TEXT PRIMARY KEY AUTOINCREMENT NOT NULL,
+  task_id INTEGER PRIMARY KEY AUTOINCREMENT,
   description TEXT NOT NULL,
-  taskStatus BOOLEAN NOT NULL
+  taskStatus BOOLEAN
 );
 ''');
     return db.execute('''
 INSERT INTO $_tasksTable (description, taskStatus)
-VALUES ("task 1", false);
+VALUES ("task 1", 0);
 ''');
   }
 
@@ -77,5 +76,11 @@ VALUES ("task 1", false);
   @override
   Future<void> removeTask(Task task) async {
     final db = await database;
+
+    await db.delete(
+      _tasksTable,
+      where: 'id = ?',
+      whereArgs: [task.id],
+    );
   }
 }

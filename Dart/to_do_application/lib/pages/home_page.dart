@@ -64,6 +64,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _toWidget(int index) {
+    bool flag = false;
+    if (_tasks![index].taskStatus == 0) {
+      flag = false;
+    } else {
+      flag = true;
+    }
+
     return CheckboxListTile(
         tileColor: const Color.fromARGB(255, 158, 158, 158),
         title: Text(
@@ -72,12 +79,11 @@ class _HomePageState extends State<HomePage> {
         ),
         checkColor: Colors.white,
         activeColor: Colors.white,
-        selected: _tasks![index].isCompleted,
-        value: _tasks![index].isCompleted,
+        selected: flag,
+        value: flag,
         onChanged: (bool? value) {
           setState(() {
-            _tasks![index].isCompleted =
-                _tasks![index].isCompleted ? false : true;
+            _tasks![index].taskStatus = flag ? 0 : 1;
           });
         });
   }
