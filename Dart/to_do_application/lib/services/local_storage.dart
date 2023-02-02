@@ -51,18 +51,12 @@ VALUES ("task 1", false);
     final List<Map<String, dynamic>> result = await db.query(_tasksTable);
 
     return List.generate(result.length, (i) {
-      return temp(
-        name: result[i]['description'],
-        age: result[i]['taskStatus'],
+      return Task(
+        id: result[i]['id'],
+        description: result[i]['description'],
+        taskStatus: result[i]['taskStatus'],
       );
     });
-
-    return result
-        .map((e) => Task(
-              description: e['description'],
-              taskStatus: e['taskStatus'],
-            ))
-        .toList();
   }
 
   @override
