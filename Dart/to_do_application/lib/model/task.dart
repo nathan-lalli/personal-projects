@@ -1,11 +1,12 @@
 import 'package:uuid/uuid.dart';
 
 class Task {
-  Task({this.description = '', int? id, int? taskStatus})
+  Task({this.description = '', String? id, int? taskStatus})
       : taskStatus = 0,
-        id = id ?? const Uuid().v4().hashCode;
+        id = id ?? _uuid.v1();
+  static const _uuid = Uuid();
   final String description;
-  final int id;
+  final String id;
   int taskStatus;
 
   Map<String, dynamic> toMap() {

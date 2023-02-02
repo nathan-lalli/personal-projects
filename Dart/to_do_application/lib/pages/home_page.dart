@@ -34,11 +34,31 @@ class _HomePageState extends State<HomePage> {
               body: const CircularProgressIndicator(),
             );
           }
+
           return Scaffold(
               appBar: AppBar(
                 title:
                     const Text('Todo', style: TextStyle(color: Colors.white)),
                 backgroundColor: Colors.red,
+                actions: <Widget>[
+                  Visibility(
+                      visible: checkSelection(),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.delete_forever_outlined,
+                        ),
+                        //color: selectionIsActive ? null : Colors.white,
+                        // disabledColor: const Color.fromARGB(0, 255, 255, 255),
+                        onPressed: () {
+                          // Delete selections
+                          for (int i = 0; i < _tasks!.length; i++) {
+                            if (_tasks![i].taskStatus == 1) {
+                              TaskController().removeTask(_tasks![i]);
+                            }
+                          }
+                        },
+                      ))
+                ],
               ),
               backgroundColor: const Color.fromARGB(136, 19, 18, 18),
               body: ListView.separated(
@@ -77,7 +97,7 @@ class _HomePageState extends State<HomePage> {
           _tasks![index].description,
           style: const TextStyle(color: Colors.white),
         ),
-        checkColor: Colors.white,
+        checkColor: Colors.black,
         activeColor: Colors.white,
         selected: flag,
         value: flag,
@@ -86,5 +106,14 @@ class _HomePageState extends State<HomePage> {
             _tasks![index].taskStatus = flag ? 0 : 1;
           });
         });
+  }
+
+  bool checkSelection() {
+    for (int i = 0; i < _tasks!.length; i++) {
+      if (_tasks![i].taskStatus == 1) {
+        return true;
+      }
+    }
+    return false;
   }
 }

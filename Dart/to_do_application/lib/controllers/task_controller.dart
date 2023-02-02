@@ -12,8 +12,8 @@ class TaskController {
     return Future.value(LocalStorage().getTasks());
   }
 
-  Future<void> insertTask(String description, bool taskStatus) {
-    return Future.value(LocalStorage().insertTask(description, taskStatus));
+  Future<void> insertTask(String description) {
+    return Future.value(LocalStorage().insertTask(description, 0));
   }
 
   Future<void> removeTask(Task task) {

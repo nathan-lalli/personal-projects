@@ -2,6 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../model/task.dart';
 import 'storage.dart';
+import 'package:uuid/uuid.dart';
 
 class LocalStorage implements Storage {
   factory LocalStorage() => _singleton;
@@ -32,14 +33,14 @@ class LocalStorage implements Storage {
   static Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
 CREATE TABLE $_tasksTable (
-  task_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  task_id TEXT PRIMARY KEY,
   description TEXT NOT NULL,
-  taskStatus BOOLEAN
+  taskStatus INTEGER
 );
 ''');
     return db.execute('''
-INSERT INTO $_tasksTable (description, taskStatus)
-VALUES ("task 1", 0);
+INSERT INTO $_tasksTable (task_id, description, taskStatus)
+VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1", 0);
 ''');
   }
 
@@ -59,10 +60,13 @@ VALUES ("task 1", 0);
   }
 
   @override
-  Future<void> insertTask(String description, bool taskStatus) async {
+  Future<void> insertTask(String description, int taskStatus) async {
     final db = await database;
 
+    const taskId = Uuid();
+
     final value = {
+      'id': taskId.v1(),
       'description': description,
       'taskStatus': taskStatus,
     };
