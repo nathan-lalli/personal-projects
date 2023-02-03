@@ -13,7 +13,7 @@ class TaskController {
   }
 
   Future<void> insertTask(String description) {
-    return Future.value(LocalStorage().insertTask(description, 0));
+    return Future.value(LocalStorage().insertTask(description));
   }
 
   Future<void> removeTask(Task task) {

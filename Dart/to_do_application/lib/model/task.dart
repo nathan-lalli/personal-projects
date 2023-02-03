@@ -11,7 +11,7 @@ class Task {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'task_id': id,
       'description': description,
       'taskStatus': taskStatus,
     };
@@ -19,6 +19,6 @@ class Task {
 
   @override
   String toString() {
-    return 'Task{id: $id, description: $description, taskStatus: $taskStatus}';
+    return 'Task{task_id: $id, description: $description, taskStatus: $taskStatus}';
   }
 }

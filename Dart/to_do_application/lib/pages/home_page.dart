@@ -47,8 +47,6 @@ class _HomePageState extends State<HomePage> {
                         icon: const Icon(
                           Icons.delete_forever_outlined,
                         ),
-                        //color: selectionIsActive ? null : Colors.white,
-                        // disabledColor: const Color.fromARGB(0, 255, 255, 255),
                         onPressed: () {
                           // Delete selections
                           for (int i = 0; i < _tasks!.length; i++) {
@@ -71,8 +69,7 @@ class _HomePageState extends State<HomePage> {
                   Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                 FloatingActionButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const NewTaskPage()));
+                    Navigator.of(context).pushReplacementNamed("/new_task");
                   },
                   backgroundColor: Colors.red,
                   tooltip: 'Add Task',

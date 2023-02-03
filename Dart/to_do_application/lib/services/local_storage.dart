@@ -60,15 +60,18 @@ VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1", 0);
   }
 
   @override
-  Future<void> insertTask(String description, int taskStatus) async {
+  Future<void> insertTask(String description) async {
     final db = await database;
 
     const taskId = Uuid();
+    String? newId;
+    newId = newId ?? taskId.v1();
+    const int status = 0;
 
     final value = {
-      'id': taskId.v1(),
+      'task_id': newId,
       'description': description,
-      'taskStatus': taskStatus,
+      'taskStatus': status,
     };
 
     await db.insert(_tasksTable, value);
@@ -83,7 +86,7 @@ VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1", 0);
 
     await db.delete(
       _tasksTable,
-      where: 'id = ?',
+      where: 'task_id = ?',
       whereArgs: [task.id],
     );
   }

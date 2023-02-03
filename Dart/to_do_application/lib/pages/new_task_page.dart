@@ -47,8 +47,7 @@ class NewTaskPage extends StatelessWidget {
                 // Insert the new task into the database
                 TaskController().insertTask(textController.text);
                 // Navigate back to the home page
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => const HomePage()));
+                Navigator.of(context).pushReplacementNamed("/home");
               },
               child: const Text('Save'))
         ]));
