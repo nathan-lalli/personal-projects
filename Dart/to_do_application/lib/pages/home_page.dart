@@ -1,3 +1,7 @@
+// I estimated it to take about an hour to 2 hours to complete this program.
+// I actually spent about 7 or 8 hours on and off this program because of the
+// Issues that I was having with SQLite.
+
 import 'package:flutter/material.dart';
 import 'package:to_do_application/services/local_storage.dart';
 
