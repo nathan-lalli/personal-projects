@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../model/task.dart';
 import 'storage.dart';
-import 'package:uuid/uuid.dart';
+//import 'package:uuid/uuid.dart';
 
 class LocalStorage implements Storage {
   factory LocalStorage() => _singleton;

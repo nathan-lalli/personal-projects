@@ -1,4 +1,5 @@
 import '../model/task.dart';
+import '../services/firestore_storage.dart';
 import '../services/local_storage.dart';
 
 class TaskController {
@@ -8,8 +9,8 @@ class TaskController {
 
   static final TaskController _singleton = TaskController._internal();
 
-  Future<List<Task>> getTasks() {
-    return Future.value(LocalStorage().getTasks());
+  Future<List<Task>?> getTasks() {
+    return Future.value(FirestoreStorage().getTasks());
   }
 
   Future<void> insertTask(String description) {

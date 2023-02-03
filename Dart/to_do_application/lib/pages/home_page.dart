@@ -3,7 +3,8 @@
 // Issues that I was having with SQLite.
 
 import 'package:flutter/material.dart';
-import 'package:to_do_application/services/local_storage.dart';
+import 'package:to_do_application/services/firestore_storage.dart';
+//import 'package:to_do_application/services/local_storage.dart';
 
 import '../controllers/task_controller.dart';
 import '../model/task.dart';
@@ -16,12 +17,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Future<List<Task>> _tasksFuture = TaskController().getTasks();
+  final Future<List<Task>?> _tasksFuture =
+      Future.value(FirestoreStorage().getTasks());
   List<Task>? _tasks;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Task>>(
+    return FutureBuilder<List<Task>?>(
         future: _tasksFuture,
         builder: (context, snapshot) {
           if (_tasks == null && snapshot.hasData) {
