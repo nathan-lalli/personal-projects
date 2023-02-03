@@ -33,14 +33,14 @@ class LocalStorage implements Storage {
   static Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
 CREATE TABLE $_tasksTable (
-  task_id TEXT PRIMARY KEY,
+  task_id INTEGER PRIMARY KEY AUTOINCREMENT,
   description TEXT NOT NULL,
-  taskStatus INTEGER
+  taskStatus INTEGER NOT NULL
 );
 ''');
     return db.execute('''
 INSERT INTO $_tasksTable (task_id, description, taskStatus)
-VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1", 0);
+VALUES (0, "task 1", 0);
 ''');
   }
 
@@ -52,7 +52,7 @@ VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1", 0);
 
     return List.generate(result.length, (i) {
       return Task(
-        id: result[i]['id'],
+        id: result[i]['task_id'],
         description: result[i]['description'],
         taskStatus: result[i]['taskStatus'],
       );
@@ -63,13 +63,15 @@ VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1", 0);
   Future<void> insertTask(String description) async {
     final db = await database;
 
-    const taskId = Uuid();
-    String? newId;
-    newId = newId ?? taskId.v1();
+    // const taskId = Uuid();
+    // String? newId;
+    // newId = newId ?? taskId.v1();
+    final List<Map<String, dynamic>> result = await db.query(_tasksTable);
     const int status = 0;
+    int id = result.last['task_id'] + 1;
 
     final value = {
-      'task_id': newId,
+      'task_id': id,
       'description': description,
       'taskStatus': status,
     };
@@ -91,3 +93,12 @@ VALUES ("fd27cef2-7276-11ed-a1eb-0242ac120002", "task 1", 0);
     );
   }
 }
+
+// 08b84350-a378-11ed-8415-1f37eb772c32
+// f028cf10-a379-11ed-87a6-6792a7e934e3
+
+// next test
+// a55df810-a37a-11ed-87a6-6792a7e934e3
+
+// next
+// 4b99db81-a37c-11ed-86ee-1756460c2e8f

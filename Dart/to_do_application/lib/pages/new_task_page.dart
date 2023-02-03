@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_application/pages/home_page.dart';
 import '../controllers/task_controller.dart';
 
 class NewTaskPage extends StatelessWidget {
@@ -44,10 +43,15 @@ class NewTaskPage extends StatelessWidget {
                   backgroundColor: MaterialStatePropertyAll<Color>(
                       Color.fromARGB(255, 97, 97, 97))),
               onPressed: () {
-                // Insert the new task into the database
-                TaskController().insertTask(textController.text);
-                // Navigate back to the home page
-                Navigator.of(context).pushReplacementNamed("/home");
+                if (textController.text.isEmpty) {
+                  // Navigate back to the home page
+                  Navigator.of(context).pushReplacementNamed("/home");
+                } else {
+                  // Insert the new task into the database
+                  TaskController().insertTask(textController.text);
+                  // Navigate back to the home page
+                  Navigator.of(context).pushReplacementNamed("/home");
+                }
               },
               child: const Text('Save'))
         ]));

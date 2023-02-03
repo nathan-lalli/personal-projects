@@ -1,10 +1,5 @@
-// I think this will take at least 2 hours to complete
-// It actually took me about 3 hours or so to complete
-// I had to look up a lot of things in order to find the best way to complete
-// the different things I wanted to do. I also had a lot of issues with the syntax of flutter again
-
 import 'package:flutter/material.dart';
-import 'package:to_do_application/pages/new_task_page.dart';
+import 'package:to_do_application/services/local_storage.dart';
 
 import '../controllers/task_controller.dart';
 import '../model/task.dart';
@@ -49,11 +44,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                         onPressed: () {
                           // Delete selections
-                          for (int i = 0; i < _tasks!.length; i++) {
-                            if (_tasks![i].taskStatus == 1) {
-                              TaskController().removeTask(_tasks![i]);
+                          setState(() {
+                            for (int i = 0; i < _tasks!.length; i++) {
+                              if (_tasks![i].taskStatus == 1) {
+                                TaskController().removeTask(_tasks![i]);
+                                _tasks!.removeAt(i);
+                              }
                             }
-                          }
+                          });
                         },
                       ))
                 ],
