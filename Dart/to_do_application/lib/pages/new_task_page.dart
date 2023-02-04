@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import '../controllers/task_controller.dart';
 
-class NewTaskPage extends StatelessWidget {
+class NewTaskPage extends StatefulWidget {
   const NewTaskPage({Key? key}) : super(key: key);
 
+  @override
+  State<NewTaskPage> createState() => _NewTaskPageState();
+}
+
+class _NewTaskPageState extends State<NewTaskPage> {
   @override
   Widget build(BuildContext context) {
     // Create a text controller to get the values in the text field
@@ -43,15 +48,17 @@ class NewTaskPage extends StatelessWidget {
                   backgroundColor: MaterialStatePropertyAll<Color>(
                       Color.fromARGB(255, 97, 97, 97))),
               onPressed: () {
-                if (textController.text.isEmpty) {
-                  // Navigate back to the home page
-                  Navigator.of(context).pushReplacementNamed("/home");
-                } else {
-                  // Insert the new task into the database
-                  TaskController().insertTask(textController.text);
-                  // Navigate back to the home page
-                  Navigator.of(context).pushReplacementNamed("/home");
-                }
+                setState(() {
+                  if (textController.text.isEmpty) {
+                    // Navigate back to the home page
+                    Navigator.of(context).pushReplacementNamed("/home");
+                  } else {
+                    // Insert the new task into the database
+                    // Navigate back to the home page
+                    Navigator.pop(context,
+                        TaskController().insertTask(textController.text));
+                  }
+                });
               },
               child: const Text('Save'))
         ]));

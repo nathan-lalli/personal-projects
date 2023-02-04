@@ -1,8 +1,9 @@
-// I estimated it to take about an hour to 2 hours to complete this program.
-// I actually spent about 7 or 8 hours on and off this program because of the
-// Issues that I was having with SQLite.
+// I estimated that this would take me about 3 hours after the last assignment
+// It actually took about 5 to 6 hours because of some of the issues that I had when
+// trying to implement firestore. I had to do a lot of research to figure out how to
 
 import 'package:flutter/material.dart';
+import 'package:to_do_application/pages/new_task_page.dart';
 import 'package:to_do_application/services/firestore_storage.dart';
 //import 'package:to_do_application/services/local_storage.dart';
 
@@ -73,7 +74,8 @@ class _HomePageState extends State<HomePage> {
                   Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                 FloatingActionButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed("/new_task");
+                    _navigateAndDisplayNewTask(context);
+                    //Navigator.of(context).pushReplacementNamed("/new_task");
                   },
                   backgroundColor: Colors.red,
                   tooltip: 'Add Task',
@@ -82,6 +84,18 @@ class _HomePageState extends State<HomePage> {
                 ),
               ]));
         });
+  }
+
+  Future<void> _navigateAndDisplayNewTask(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const NewTaskPage()),
+    );
+    setState(() {
+      _tasks!.add(result);
+    });
   }
 
   Widget _toWidget(int index) {

@@ -60,7 +60,7 @@ VALUES (0, "task 1", 0);
   }
 
   @override
-  Future<void> insertTask(String description) async {
+  Future<Task> insertTask(String description) async {
     final db = await database;
 
     final List<Map<String, dynamic>> result = await db.query(_tasksTable);
@@ -74,6 +74,12 @@ VALUES (0, "task 1", 0);
     };
 
     await db.insert(_tasksTable, value);
+
+    return Task(
+      id: id,
+      description: description,
+      taskStatus: status,
+    );
   }
 
   ///
