@@ -16,16 +16,6 @@ class FirestoreStorage implements Storage {
     return result;
   }
 
-  /* 
-  return List.generate(result.length, (i) {
-      return Task(
-        id: result[i]['task_id'],
-        description: result[i]['description'],
-        taskStatus: result[i]['taskStatus'],
-      );
-    }); 
-  */
-
   @override
   Future<Task> insertTask(String description) async {
     return Task(id: -1);
