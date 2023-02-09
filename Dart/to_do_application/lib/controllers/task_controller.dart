@@ -1,6 +1,5 @@
 import '../model/task.dart';
 import '../services/firestore_storage.dart';
-import '../services/OLDlocal_storage.dart';
 
 class TaskController {
   factory TaskController() => _singleton;
