@@ -39,6 +39,7 @@ dependencies:
   path: ^1.8.2
   firebase_core: ^2.4.1
   cloud_firestore: ^4.3.1
+  firebase_auth: ^4.2.6
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/images/check-mark-logo.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
