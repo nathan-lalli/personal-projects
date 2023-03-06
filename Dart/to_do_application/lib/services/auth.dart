@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Auth {
   final _auth = FirebaseAuth.instance;
@@ -6,7 +7,10 @@ class Auth {
   Future<String?> signInWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
-      // TODO use _auth to create an account
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       return null;
     } on FirebaseAuthException catch (e) {
       return _parseSignInAuthException(e);
@@ -16,7 +20,14 @@ class Auth {
   Future<String?> createAccountWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
-      // TODO use _auth to create an account
+      final db = FirebaseFirestore.instance;
+      final id = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      CollectionReference users = db.collection('users');
+
+      users.doc(id.user!.uid).set({});
       return null;
     } on FirebaseAuthException catch (e) {
       return _parseCreateAccountAuthException(e);
@@ -24,17 +35,24 @@ class Auth {
   }
 
   String? getUserId() {
-    // TODO
+    final user = _auth.currentUser;
+    if (user != null) {
+      return user.uid;
+    } else {
+      return null;
+    }
   }
 
   bool isSignedIn() {
-    // TODO
-    return false;
+    final user = _auth.currentUser;
+    if (user != null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  void signOut() {
-    // TODO
-  }
+  void signOut() {}
 
   String _parseSignInAuthException(FirebaseAuthException exception) {
     switch (exception.code) {

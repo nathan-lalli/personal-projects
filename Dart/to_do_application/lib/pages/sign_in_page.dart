@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../utils/account_validator.dart';
 import '../controllers/auth_controller.dart';
 
-class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<CreateAccountPage> createState() => _CreateAccountPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _CreateAccountPageState extends State<CreateAccountPage> {
+class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
@@ -21,8 +21,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Create Account',
-              style: TextStyle(color: Colors.white)),
+          title: const Text('Sign In', style: TextStyle(color: Colors.white)),
           backgroundColor: Colors.red),
       backgroundColor: const Color.fromARGB(136, 19, 18, 18),
       body: Form(
@@ -82,7 +81,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 backgroundColor: MaterialStateProperty.all(Colors.red),
               ),
               child: const Text(
-                'Create Account',
+                'Sign In',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onPressed: () {
@@ -96,7 +95,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 } else if (_formKey.currentState!.validate()) {
                   // create the account
                   _authController
-                      .createAccount(
+                      .signIn(
                           email: _emailController.text,
                           password: _pwController.text)
                       .then((value) {

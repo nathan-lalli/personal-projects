@@ -75,7 +75,6 @@ class _HomePageState extends State<HomePage> {
                 FloatingActionButton(
                   onPressed: () {
                     _navigateAndDisplayNewTask(context);
-                    //Navigator.of(context).pushReplacementNamed("/new_task");
                   },
                   backgroundColor: Colors.red,
                   tooltip: 'Add Task',
