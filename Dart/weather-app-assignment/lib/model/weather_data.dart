@@ -1,3 +1,4 @@
+
 class WeatherData {
   late int windSpeed;
   late double windDirection;
@@ -32,8 +33,8 @@ class WeatherData {
     windSpeed = weatherData['wind_speed_avg_last_10_min'].round();
     windDirection = weatherData['wind_dir_scalar_avg_last_10_min'].toDouble();
     feelsLikeTemperature = weatherData['thsw_index'].round();
-    humidity = 99; // TODO update to use weatherData
-    temperature = 99; // TODO update to use weatherData
+    humidity = weatherData['hum'].round();
+    temperature = weatherData['temp'].round();
 
 
     loadedSuccessfully = true;
