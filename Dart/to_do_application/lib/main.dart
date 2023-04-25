@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
-
 import 'pages/home_page.dart';
+import 'pages/new_task_page.dart';
+import 'pages/opening_page.dart';
+import 'pages/create_account_page.dart';
+import 'pages/sign_in_page.dart';
 
-void main() {
+//Firebase imports
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    name: "todoapplication-f2df7",
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -11,9 +23,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home: HomePage(),
+    return MaterialApp(
+      title: 'To Do Application',
+      theme: ThemeData(fontFamily: 'BrunoAceSC'),
+      initialRoute: "/open",
+      routes: {
+        "/open": (context) => const OpeningPage(),
+        "/home": (context) => const HomePage(),
+        "/new_task": (context) => const NewTaskPage(),
+        "/create_account": (context) => const CreateAccountPage(),
+        "/sign_in": (context) => const SignInPage(),
+      },
     );
   }
 }

@@ -1,5 +1,5 @@
 import '../model/task.dart';
-import '../services/fake_data.dart';
+import '../services/firestore_storage.dart';
 
 class TaskController {
   factory TaskController() => _singleton;
@@ -8,7 +8,15 @@ class TaskController {
 
   static final TaskController _singleton = TaskController._internal();
 
-  Future<List<Task>> getTasks() {
-    return Future.value(FakeData().getTasks());
+  Future<List<Task>?> getTasks() {
+    return Future.value(FirestoreStorage().getTasks());
+  }
+
+  Future<Task> insertTask(String description) {
+    return Future.value(FirestoreStorage().insertTask(description));
+  }
+
+  Future<void> removeTask(Task task) {
+    return Future.value(FirestoreStorage().removeTask(task));
   }
 }

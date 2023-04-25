@@ -1,11 +1,22 @@
-import 'package:uuid/uuid.dart';
+//import 'package:uuid/uuid.dart';
 
 class Task {
-  Task({this.description = '', String? id, required taskStatus})
-      : isCompleted = false,
-        id = id ?? _uuid.v1();
-  bool isCompleted;
-  static const _uuid = Uuid();
+  Task({this.description = '', this.id = 0, this.taskStatus = 0});
+  //static const _uuid = Uuid();
   final String description;
-  final String id;
+  final int id;
+  int taskStatus;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'task_id': id,
+      'description': description,
+      'taskStatus': taskStatus,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Task{task_id: $id, description: $description, taskStatus: $taskStatus}';
+  }
 }
